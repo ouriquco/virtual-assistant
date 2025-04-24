@@ -1,0 +1,11 @@
+Table: students
+  Column: name, Type: varchar(255)
+  Column: age, Type: int
+Table: U.S. Air Traffic
+  Column: Date, Type: text
+  Column: U.S. Airline Traffic - Total - Seasonally Adjusted, Type: double
+  Column: U.S. Airline Traffic - International - Seasonally Adjusted, Type: double
+  Column: U.S. Airline Traffic - Domestic - Seasonally Adjusted, Type: double
+  Column: U.S. Airline Traffic - Total - Non Seasonally Adjusted, Type: double
+  Column: U.S. Airline Traffic - International - Non Seasonally Adjusted, Type: double
+  Column: U.S. Airline Traffic - Domestic - Non Seasonally Adjusted, Type: double

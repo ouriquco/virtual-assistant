@@ -1,0 +1,170 @@
+Price: 110.61 USD  Itinerary duration: PT11H48M
+    ONT -> LAS on 2025-05-05T14:42:00
+    LAS -> JFK on 2025-05-05T21:26:00
+----------------------------------------
+Price: 110.61 USD  Itinerary duration: PT14H12M
+    ONT -> DFW on 2025-05-05T18:47:00
+    DFW -> JFK on 2025-05-06T07:16:00
+----------------------------------------
+Price: 110.61 USD  Itinerary duration: PT15H38M
+    ONT -> LAS on 2025-05-05T10:52:00
+    LAS -> JFK on 2025-05-05T21:26:00
+----------------------------------------
+Price: 149.59 USD  Itinerary duration: PT11H19M
+    LAX -> LAS on 2025-05-05T15:11:00
+    LAS -> JFK on 2025-05-05T21:26:00
+----------------------------------------
+Price: 149.59 USD  Itinerary duration: PT30H25M
+    LAX -> LAS on 2025-05-05T20:05:00
+    LAS -> JFK on 2025-05-06T21:26:00
+----------------------------------------
+Price: 149.59 USD  Itinerary duration: PT14H1M
+    LAX -> MCO on 2025-05-05T16:59:00
+    MCO -> JFK on 2025-05-06T07:15:00
+----------------------------------------
+Price: 174.94 USD  Itinerary duration: PT5H40M
+    LAX -> JFK on 2025-05-05T20:50:00
+----------------------------------------
+Price: 283.00 USD  Itinerary duration: PT8H9M
+    LAX -> SFO on 2025-05-05T11:20:00
+    SFO -> JFK on 2025-05-05T13:52:00
+----------------------------------------
+Price: 283.00 USD  Itinerary duration: PT9H12M
+    LAX -> SFO on 2025-05-05T19:47:00
+    SFO -> JFK on 2025-05-05T23:15:00
+----------------------------------------
+Price: 283.00 USD  Itinerary duration: PT10H12M
+    LAX -> SFO on 2025-05-05T18:47:00
+    SFO -> JFK on 2025-05-05T23:15:00
+----------------------------------------
+Price: 283.00 USD  Itinerary duration: PT9H15M
+    LAX -> SEA on 2025-05-05T17:45:00
+    SEA -> JFK on 2025-05-05T21:33:00
+----------------------------------------
+Price: 293.00 USD  Itinerary duration: PT8H13M
+    LAX -> SFO on 2025-05-05T06:46:00
+    SFO -> JFK on 2025-05-05T09:20:00
+----------------------------------------
+Price: 298.78 USD  Itinerary duration: PT11H
+    LAX -> BUF on 2025-05-05T21:59:00
+    BUF -> JFK on 2025-05-06T10:33:00
+----------------------------------------
+Price: 324.04 USD  Itinerary duration: PT9H8M
+    LAX -> SEA on 2025-05-05T07:00:00
+    SEA -> JFK on 2025-05-05T10:41:00
+----------------------------------------
+Price: 324.04 USD  Itinerary duration: PT9H8M
+    LAX -> SEA on 2025-05-05T07:00:00
+    SEA -> JFK on 2025-05-05T10:41:00
+----------------------------------------
+Price: 324.04 USD  Itinerary duration: PT9H59M
+    LAX -> SEA on 2025-05-05T10:00:00
+    SEA -> JFK on 2025-05-05T14:35:00
+----------------------------------------
+Price: 324.04 USD  Itinerary duration: PT10H52M
+    LAX -> SEA on 2025-05-05T16:08:00
+    SEA -> JFK on 2025-05-05T21:33:00
+----------------------------------------
+Price: 324.04 USD  Itinerary duration: PT10H59M
+    LAX -> SEA on 2025-05-05T09:00:00
+    SEA -> JFK on 2025-05-05T14:35:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H33M
+    LAX -> JFK on 2025-05-05T16:25:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H34M
+    LAX -> JFK on 2025-05-05T15:25:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H34M
+    LAX -> JFK on 2025-05-05T23:59:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H35M
+    LAX -> JFK on 2025-05-05T06:00:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H35M
+    LAX -> JFK on 2025-05-05T10:00:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H35M
+    LAX -> JFK on 2025-05-05T12:10:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H39M
+    LAX -> JFK on 2025-05-05T11:20:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H39M
+    LAX -> JFK on 2025-05-05T16:20:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H40M
+    LAX -> JFK on 2025-05-05T14:20:00
+----------------------------------------
+Price: 324.51 USD  Itinerary duration: PT5H41M
+    LAX -> JFK on 2025-05-05T13:25:00
+----------------------------------------
+Price: 333.01 USD  Itinerary duration: PT8H9M
+    LAX -> SFO on 2025-05-05T11:20:00
+    SFO -> JFK on 2025-05-05T13:52:00
+----------------------------------------
+Price: 333.01 USD  Itinerary duration: PT9H15M
+    LAX -> SEA on 2025-05-05T17:45:00
+    SEA -> JFK on 2025-05-05T21:33:00
+----------------------------------------
+Price: 349.47 USD  Itinerary duration: PT5H20M
+    ONT -> JFK on 2025-05-05T22:40:00
+----------------------------------------
+Price: 351.95 USD  Itinerary duration: PT17H21M
+    LAX -> FLL on 2025-05-05T22:30:00
+    FLL -> JFK on 2025-05-06T15:55:00
+----------------------------------------
+Price: 359.00 USD  Itinerary duration: PT8H13M
+    LAX -> SFO on 2025-05-05T06:46:00
+    SFO -> JFK on 2025-05-05T09:20:00
+----------------------------------------
+Price: 364.60 USD  Itinerary duration: PT11H19M
+    LAX -> SFO on 2025-05-05T08:10:00
+    SFO -> JFK on 2025-05-05T13:52:00
+----------------------------------------
+Price: 364.60 USD  Itinerary duration: PT14H15M
+    LAX -> SFO on 2025-05-05T21:45:00
+    SFO -> JFK on 2025-05-06T06:26:00
+----------------------------------------
+Price: 364.60 USD  Itinerary duration: PT16H13M
+    LAX -> SFO on 2025-05-05T19:47:00
+    SFO -> JFK on 2025-05-06T06:26:00
+----------------------------------------
+Price: 406.57 USD  Itinerary duration: PT15H15M
+    LAX -> PDX on 2025-05-05T21:15:00
+    PDX -> JFK on 2025-05-06T07:03:00
+----------------------------------------
+Price: 439.20 USD  Itinerary duration: PT9H24M
+    LAX -> FLL on 2025-05-05T11:30:00
+    FLL -> JFK on 2025-05-05T20:59:00
+----------------------------------------
+Price: 439.20 USD  Itinerary duration: PT10H59M
+    LAX -> FLL on 2025-05-05T09:55:00
+    FLL -> JFK on 2025-05-05T20:59:00
+----------------------------------------
+Price: 445.30 USD  Itinerary duration: PT5H30M
+    LAX -> JFK on 2025-05-05T07:00:00
+----------------------------------------
+Price: 445.30 USD  Itinerary duration: PT5H40M
+    LAX -> JFK on 2025-05-05T06:30:00
+----------------------------------------
+Price: 493.39 USD  Itinerary duration: PT8H5M
+    LAX -> BOS on 2025-05-05T10:20:00
+    BOS -> JFK on 2025-05-05T20:05:00
+----------------------------------------
+Price: 493.39 USD  Itinerary duration: PT9H20M
+    LAX -> BOS on 2025-05-05T09:05:00
+    BOS -> JFK on 2025-05-05T20:05:00
+----------------------------------------
+Price: 546.60 USD  Itinerary duration: PT16H24M
+    LAX -> SEA on 2025-05-05T21:05:00
+    SEA -> JFK on 2025-05-06T07:57:00
+----------------------------------------
+Price: 546.60 USD  Itinerary duration: PT17H30M
+    LAX -> SEA on 2025-05-05T19:59:00
+    SEA -> JFK on 2025-05-06T07:57:00
+----------------------------------------
+Price: 639.79 USD  Itinerary duration: PT11H10M
+    LAX -> SAN on 2025-05-05T16:50:00
+    SAN -> JFK on 2025-05-05T22:40:00
+----------------------------------------
