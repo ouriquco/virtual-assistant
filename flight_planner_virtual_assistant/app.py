@@ -1,8 +1,9 @@
 import gradio as gr
-from langchain_ollama import ChatOllama
 from langchain_community.cache import RedisCache
 from langchain.globals import set_llm_cache
 from redis import Redis
+from llm_guard.input_scanners import PromptInjection
+from llm_guard.input_scanners.prompt_injection import MatchType
 from langchain_core.prompts import ChatPromptTemplate
 from router import Router, ChatOpenRouter
 from dotenv import load_dotenv
@@ -13,6 +14,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Flight Planner Virtual Assistant")
     parser.add_argument("--llm", type=str, default='deepseek', choices=['deepseek', 'moonshot', 'mistral'], help="LLM to use (choose from: %(choices)s)")
     return parser.parse_args()
+
+def get_prompt_injection_scanner():
+    return PromptInjection(threshold=0.5, match_type=MatchType.FULL)
 
 def get_llm(model_name):
     if model_name == 'deepseek':
@@ -80,8 +84,11 @@ def setup_router(llm, number_of_results):
         return f"⚠️ Error: {str(e)}"
 
 
-def answer_question(user_input, router): 
-    try: 
+def answer_question(user_input, router, prompt_scanner): 
+    try:
+        sanitized_prompt, is_valid, risk_score = prompt_scanner.scan(user_input)
+        if not is_valid:
+            return f"⚠️ Prompt Injection Detected! Risk Score: {risk_score:.2f}. Please rephrase your question."
         return router.route(user_input)
     except Exception as e:
         return f"⚠️ Error: {str(e)}"
@@ -94,6 +101,7 @@ def main():
     llm = get_llm(args.llm)
     set_llm_cache(RedisCache(redis_=Redis(host="localhost", port=6379)))
     router = setup_router(llm, number_of_results)
+    prompt_scanner = get_prompt_injection_scanner()
 
     with gr.Blocks(title="Flight Planner Virtual Assistant") as demo:
         gr.Markdown("## 📚 Flight Planner Virtual Assistant")
@@ -103,7 +111,7 @@ def main():
             user_input = gr.Textbox(placeholder="Ask something like 'What is the cheapest airfare from San Jose to Kona on June 1st 2025?'", label="Your Question")
 
         output = gr.Textbox(label="Virtual Assistant Answer", lines=10)
-        user_input.submit(fn=lambda x: answer_question(x, router), inputs=[user_input], outputs=output)
+        user_input.submit(fn=lambda x: answer_question(x, router, prompt_scanner), inputs=[user_input], outputs=output)
     
     demo.launch()
 
