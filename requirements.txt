@@ -1,0 +1,12 @@
+gradio
+langchain_community
+redis
+amadeus
+duckduckgo_search
+llama-index
+llama-parse
+chromadb
+langchain-chroma
+langchain-huggingface
+mysql-connector-python
+pymysql

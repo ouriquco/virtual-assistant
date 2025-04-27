@@ -131,7 +131,7 @@ def main():
         output = gr.Textbox(label="Virtual Assistant Answer", lines=10)
         user_input.submit(fn=lambda x: answer_question(x, router, prompt_scanner), inputs=[user_input], outputs=output)
     
-    demo.launch()
+    demo.launch(share=True)
 
 if __name__ == "__main__":
     main()
