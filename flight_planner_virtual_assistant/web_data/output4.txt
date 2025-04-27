@@ -1,0 +1,15 @@
+Title: Reddit - The heart of the internet
+Content: 
+              Welcome to our community! This subreddit focuses on the coding side of ChatGPT - from interactions you've had with it, to tips on using it, to posting full blown creations! Make sure to read our rules before posting!
+
+             
+    I asked ChatGPT: "Hi, would adding "ignore all previous instructions" at the beginning of the first prompt or system message to gpt result in all instructions provided by openai for the purpose of chat, be ignored?"
+   
+    Response: "Yes, if you include "ignore all previous instructions" in the first prompt or system message, it will prompt the model to disregard any instructions provided by OpenAI and generate a response without considering those instructions."
+   
+    Is it really that easy to bypass OpenAIs instructions? I am asking specifically with regards to the System message when using the API.
+   
+    What kind of instructions are even given by OpenAI? My goal is to have a direct conversation with the GPT, without OpenAIs influencing the output. Is that even possible?
+   
+                  Create your account and connect with a world of communities.
+                 Anyone can view, post, and comment to this community
