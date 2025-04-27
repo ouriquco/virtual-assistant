@@ -1,0 +1,111 @@
+import gradio as gr
+from langchain_ollama import ChatOllama
+from langchain_community.cache import RedisCache
+from langchain.globals import set_llm_cache
+from redis import Redis
+from langchain_core.prompts import ChatPromptTemplate
+from router import Router, ChatOpenRouter
+from dotenv import load_dotenv
+import argparse
+import os 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Flight Planner Virtual Assistant")
+    parser.add_argument("--llm", type=str, default='deepseek', choices=['deepseek', 'moonshot', 'mistral'], help="LLM to use (choose from: %(choices)s)")
+    return parser.parse_args()
+
+def get_llm(model_name):
+    if model_name == 'deepseek':
+        return ChatOpenRouter(model_name="deepseek/deepseek-chat-v3-0324:free")
+    elif model_name == 'moonshot':
+        return ChatOpenRouter(model_name="moonshotai/moonlight-16b-a3b-instruct:free")
+    elif model_name == 'mistral':
+        return ChatOpenRouter(model_name="mistralai/mistral-7b-instruct:free")
+    else:
+        raise ValueError(f"Unsupported LLM: {model_name}")
+
+def setup_router(llm, number_of_results):
+    system_prompt = ("""Answer the question based on the provided guidelines.
+    **Guidelines:**
+    - For questions regarding specific flight details, reply strictly with "flight api"
+    - For questions about the amount of air traffic that has occured in the past, reply strictly with "database"
+    - For ALL other questions, reply strictly with "general"
+    """
+    )
+
+    sql_prompt = ('''You are an expert SQL assistant.
+
+    Given the following database schema:
+    {table_info}
+
+    Task:
+    - Write a syntactically correct SQL query for the question below.
+    - Do not use these forbidden SQL keywords: "DELETE", "UPDATE", "INSERT", "DROP", "ALTER", "CREATE", "TRUNCATE".
+    - Limit the results to {top_k} rows.
+    - If the query returns results, use them to answer the question in plain English.
+    - If the query returns no results, reply: "I don't know."
+
+    Question:
+    {input}
+
+    Strucutre output strictly as follows:
+    SQL Query: the SQL query
+    Answer: the answer  
+
+    If you are unable to answer the question, reply: "I don't know             
+    ''')
+
+    web_prompt = ('''You are an expert flight planner assistant that will answer general questions.
+                    
+    Given the following web search results:
+    {context}
+    Task:
+    - Answer the question below using the web search results.
+    - If the web search results contain a list of items, summarize the list in your answer.
+    - If the web search results do not contain enough information to answer the question, reply: "I don't know."
+    ''')
+       
+    try: 
+        new_router = Router(
+            llm=llm,
+            system_prompt=system_prompt,
+            web_prompt=web_prompt,
+            sql_prompt=sql_prompt,
+            number_of_results=number_of_results,
+        )
+
+        return new_router
+    
+    except Exception as e:
+        return f"⚠️ Error: {str(e)}"
+
+
+def answer_question(user_input, router): 
+    try: 
+        return router.route(user_input)
+    except Exception as e:
+        return f"⚠️ Error: {str(e)}"
+
+def main():
+    load_dotenv()
+    os.environ['USER'] = 'root'
+    number_of_results = 5
+    args = parse_args()
+    llm = get_llm(args.llm)
+    set_llm_cache(RedisCache(redis_=Redis(host="localhost", port=6379)))
+    router = setup_router(llm, number_of_results)
+
+    with gr.Blocks(title="Flight Planner Virtual Assistant") as demo:
+        gr.Markdown("## 📚 Flight Planner Virtual Assistant")
+        gr.Markdown("Ask me questions about flight details, air traffic, or general information.")
+
+        with gr.Row():
+            user_input = gr.Textbox(placeholder="Ask something like 'What is the cheapest airfare from San Jose to Kona on June 1st 2025?'", label="Your Question")
+
+        output = gr.Textbox(label="Virtual Assistant Answer", lines=10)
+        user_input.submit(fn=lambda x: answer_question(x, router), inputs=[user_input], outputs=output)
+    
+    demo.launch()
+
+if __name__ == "__main__":
+    main()

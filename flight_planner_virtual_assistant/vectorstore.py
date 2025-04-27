@@ -6,14 +6,14 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import os
 
-nest_asyncio.apply()
+# nest_asyncio.apply()
 
-def get_files():
-    relative_path = "web_data"
+def get_files(relative_path):
+    rp = relative_path
     current_working_directory = os.getcwd()
-    directory = os.path.join(current_working_directory, relative_path)
+    directory = os.path.join(current_working_directory, rp)
     if not os.path.exists(directory):
-        os.makedirs(directory)
+        raise ValueError(f"Directory {directory} does not exist.")
     
     files = [os.path.join(directory, file) for file in os.listdir(directory)]
     return files
@@ -38,21 +38,21 @@ def get_chunks(files, parser):
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000, 
-        chunk_overlap=100,  
+        chunk_overlap=200,  
         separators=["\n\n", "\n", " ", ""], 
     )
 
     chunks = text_splitter.split_documents(partitions)
     return chunks
 
-def get_vectorstore():
+def get_vectorstore(collection_name=None):
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     persist_directory = "./vectorstore"
 
     try:
         vectorstore = Chroma(
             persist_directory=persist_directory,
-            collection_name="document_chunks",
+            collection_name=collection_name,
             embedding_function=embedding_model
         )
     except ValueError:
@@ -60,27 +60,28 @@ def get_vectorstore():
 
     return vectorstore
 
-def add_documents_to_vectorstore(vectorstore, chunks):
-    vectorstore.add_documents(chunks, ids=[f"chunk_{i}" for i in range(len(chunks))])
+def add_flights_to_vectorstore(vectorstore, offers):
+    documents = [Document(page_content=offer) for offer in offers]
+    ids = [f"flight_{i}" for i in range(len(offers))]
+    vectorstore.add_documents(documents, ids=ids)
 
-def get_retriever():
-    try:
-        vectorstore = Chroma(
-            persist_directory="./vectorstore",
-            collection_name="document_chunks"
-        )
-    except ValueError:
-        print("Vector store not found. Please create it first.")
-        return None
+def add_web_search_to_vectorstore(vectorstore, documents):
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
+        separators=["\n\n", "\n", " ", ""]
+    )
+
+    langchain_docs = [Document(page_content=doc['content'], metadata={"source": doc['url'], "title": doc['title']}) for doc in documents]
+    splits = text_splitter.split_documents(langchain_docs)
     
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-    return retriever
+    vectorstore.add_documents(splits)
 
-def run_vectorstore():
-    files = get_files()
+def run_vectorstore(relative_path=None, collection_name=None):
+    files = get_files(relative_path)
     parser = load_parser()
     chunks = get_chunks(files, parser)
-    vectorstore = get_vectorstore()
-    add_documents_to_vectorstore(vectorstore, chunks)
+    vectorstore = get_vectorstore(collection_name)
+    add_web_search_to_vectorstore(vectorstore, chunks)
 
 

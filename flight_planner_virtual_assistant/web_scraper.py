@@ -1,5 +1,6 @@
 import requests
 import os 
+import shutil
 from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 
@@ -36,9 +37,9 @@ def run_web_scraper(query, num_results=5):
     documents = scrape_pages(result_links)
     relative_path = './web_data'
 
-    if not os.path.exists(relative_path):
-        print("enter")
-        os.makedirs(relative_path)
+    if os.path.exists(relative_path):
+        shutil.rmtree(relative_path)
+    os.makedirs(relative_path)
 
     for i, doc in enumerate(documents):
         print(f"URL: {doc['url']}")
@@ -46,6 +47,8 @@ def run_web_scraper(query, num_results=5):
         print(f"Content: {doc['content'][:100]}")
         print("-" * 80)
 
-        with open(f'./web_data/output{i}.txt', 'a', encoding='utf-8') as f:
+        with open(f'./web_data/output{i}.txt', 'w', encoding='utf-8') as f:
             f.write(f"Title: {doc['title']}\n")
             f.write(f"Content: {doc['content']}\n")
+            
+    return documents

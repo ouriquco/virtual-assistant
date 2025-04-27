@@ -1,12 +1,2 @@
-Title: New York, New York, USA 14 day weather forecast
-Content: See weather overview Hour-by-hour weather for New York next 7 days  Need some help? © Time and Date AS 1995–2025 
- © Time and Date AS 1995–2025. 
- Privacy & Terms
-
-Title: National Weather Service
-Content: 
-
-NWS
-
-All NOAA
- Your local forecast office is Fair 72°F 22°C More Information: Local Forecast OfficeMore Local Wx3 Day HistoryHourly Weather Forecast Tonight  Low: 58 °F Mostly Clear Friday  High: 76 °F Mostly Sunny Friday Night  Low: 59 °F Slight ChanceShowers thenShowersLikely Saturday  High: 72 °F Showers Saturday Night  Low: 50 °F ChanceShowers Sunday  High: 62 °F Partly Sunnythen MostlySunny andBreezy Sunday Night  Low: 50 °F Mostly Clear Monday  High: 72 °F Sunny Monday Night  Low: 54 °F Mostly Clear Zone Area Forecast for New York (Manhattan) County, NY High Temperature Chance of Precipitation
+Title: Why Is the Sky Blue? | Britannica
+Content: One of the perennial questions of childhood is “Why is the sky blue?” You may have asked this as a child, or you may have a child now asking you! The explanation begins with the ultimate source of light in our solar system: the Sun. Sunlight appears white, but this white light is made up of all the colors of the visible spectrum, ranging from red through violet. On its path through the atmosphere, sunlight is absorbed, reflected, and altered by different elements, compounds, and particles. The color of the sky depends largely upon the wavelengths of the incoming light, but air molecules (mostly nitrogen and oxygen) and dust particles also play important roles.  When the sun is high overhead, the bulk of its rays intercept the atmosphere at nearly vertical angles. Shorter wavelengths of light, such as violet and blue, are more easily absorbed by air molecules than light from longer wavelengths (that is, from red, orange, and yellow bands in the spectrum). Air molecules then radiate violet and blue light in different directions, saturating the sky. However, the midday sky appears blue, rather than a combination of blue and violet, because our eyes are more sensitive to blue light than to violet light.  When the sun is near the horizon at dawn and dusk, the sun’s rays strike the atmosphere at more-oblique (slanted) angles, and thus these rays must travel a greater distance through the atmosphere than they would at midday. As a result, there are more nitrogen and oxygen molecules and other particles that can block and scatter incoming sunlight. During this long passage, incoming radiation in the shorter blue and violet wavelengths is mostly filtered out, and the influence of these wavelengths over the color of the sky diminishes. What remains are the longer wavelengths, and some of these rays strike dust and other particles near the horizon, as well as the water droplets that make up clouds, to create the red, orange, and yellow tints we enjoy at sunrise and sunset.

@@ -1,7 +1,7 @@
 from langchain_community.utilities import SQLDatabase
 from langchain.chains import create_sql_query_chain
-from langchain_community.tools import QuerySQLDatabaseTool
 from langchain_core.prompts import PromptTemplate
+import re
 import os
 
 class DB_QA:
@@ -23,9 +23,14 @@ class DB_QA:
 
     def get_table_info(self):
         try:
-            return self.connection.get_table_info()
+            return self.connection.get_context()['table_info']
         except Exception as e:
             print(f"Error: {e}")
+
+    def _is_safe_sql(query: str) -> bool:
+        forbidden = {'delete', 'drop', 'update', 'insert', 'alter', 'truncate', 'create'}
+        pattern = re.compile(r"\b(" + "|".join(forbidden) + r")\b", re.IGNORECASE)
+        return not pattern.search(query.lower())
 
     def answer_query(self, query):
         try:
@@ -35,6 +40,6 @@ class DB_QA:
                 db=self.connection,
                 prompt=self.sql_prompt
             )
-            return db_chain.invoke({"question": query, "dialect": None, "table_info": table_info, "top_k": 5})
+            return db_chain.invoke({"question": query, "dialect": 'mysql', "table_info": table_info, "top_k": 5})
         except Exception as e:
             print(f"Error: {e}")
