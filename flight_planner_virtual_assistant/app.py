@@ -2,8 +2,6 @@ import gradio as gr
 from langchain_community.cache import RedisCache
 from langchain.globals import set_llm_cache
 from redis import Redis
-# from llm_guard.input_scanners import PromptInjection
-# from llm_guard.input_scanners.prompt_injection import MatchType
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from langchain_core.prompts import ChatPromptTemplate
 from router import Router, ChatOpenRouter
@@ -30,8 +28,6 @@ def get_prompt_injection_scanner():
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     )
     return classifier
-# def get_prompt_injection_scanner():
-#     return PromptInjection(threshold=0.5, match_type=MatchType.FULL)
 
 def get_llm(model_name):
     if model_name == 'deepseek':
@@ -92,9 +88,7 @@ def setup_router(llm, number_of_results):
             sql_prompt=sql_prompt,
             number_of_results=number_of_results,
         )
-
         return new_router
-    
     except Exception as e:
         return f"⚠️ Error: {str(e)}"
 
@@ -104,7 +98,7 @@ def answer_question(user_input, router, prompt_scanner):
         injection = prompt_scanner(user_input)[0]
         is_injection = injection['label']
         risk_score = injection['score']
-        # sanitized_prompt, is_valid, risk_score = prompt_scanner.scan(user_input)
+       
         if is_injection == 'INJECTION':
             return f"⚠️ Prompt Injection Detected! Risk Score: {risk_score:.2f}. Please rephrase your question."
         return router.route(user_input)

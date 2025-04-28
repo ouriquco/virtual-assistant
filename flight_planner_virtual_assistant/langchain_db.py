@@ -1,6 +1,7 @@
 from langchain_community.utilities import SQLDatabase
 from langchain.chains import create_sql_query_chain
 from langchain_core.prompts import PromptTemplate
+from sqlalchemy import text
 import re
 import os
 
@@ -40,6 +41,7 @@ class DB_QA:
                 db=self.connection,
                 prompt=self.sql_prompt
             )
+            print(f'Check status here: {self.connection.execute(text("SELECT COUNT(*) AS row_count FROM `U.S. Airline Traffic`;"))}')
             return db_chain.invoke({"question": query, "dialect": 'mysql', "table_info": table_info, "top_k": 5})
         except Exception as e:
             print(f"Error: {e}")

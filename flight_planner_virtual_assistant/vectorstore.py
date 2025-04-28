@@ -6,8 +6,6 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import os
 
-# nest_asyncio.apply()
-
 def get_files(relative_path):
     rp = relative_path
     current_working_directory = os.getcwd()
