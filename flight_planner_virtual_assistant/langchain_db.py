@@ -31,10 +31,19 @@ class DB_QA:
         except Exception as e:
             print(f"Error: {e}")
 
-    def _is_safe_sql(self, query: str) -> bool:
+    def _is_safe_sql(self, query: str):
         forbidden = {'delete', 'drop', 'update', 'insert', 'alter', 'truncate', 'create'}
         pattern = re.compile(r"\b(" + "|".join(forbidden) + r")\b", re.IGNORECASE)
         return not pattern.search(query.lower())
+
+    def clean_sql(self, sql):
+        # Remove trailing triple backticks
+        sql = re.sub(r'```$', '', sql)
+        # Find the position of the first SELECT (case insensitive)
+        match = re.search(r'\bSELECT\b', sql, re.IGNORECASE)
+        if match:
+            sql = sql[match.start():]
+        return sql.strip()
 
     def answer_query(self, query):
         try:
@@ -56,6 +65,8 @@ class DB_QA:
             print(write_query.invoke({"question":query}).content)
         
             sql_query = write_query.invoke({"question":query}).content
+            sql_query = self.clean_sql(sql_query)
+
             if not self._is_safe_sql(sql_query):
                 return "⚠️ SQL Injection Detected! Please rephrase your question."
             
