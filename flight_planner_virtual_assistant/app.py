@@ -3,7 +3,7 @@ from langchain_community.cache import RedisCache
 from langchain.globals import set_llm_cache
 from redis import Redis
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 from router import Router, ChatOpenRouter
 from dotenv import load_dotenv
 import torch
@@ -40,41 +40,40 @@ def get_llm(model_name):
         raise ValueError(f"Unsupported LLM: {model_name}")
 
 def setup_router(llm, number_of_results):
-    system_prompt = ("""Answer the question based on the provided guidelines.
-    **Guidelines:**
-    - For questions regarding specific flight details, reply strictly with "flight api"
-    - For questions about the amount of air traffic that has occured in the past, reply strictly with "database"
-    - For ALL other questions, reply strictly with "general"
-    """
-    )
 
-    sql_prompt = ('''You are an expert SQL assistant.
+    system_prompt = ("""Classify the user's question into one of these categories:
+        - "flight api": Questions about specific flights (e.g., ticket prices, departure times, arrival times).
+        - "database": Questions about aggregated air traffic data (e.g., totals, trends).
+        - "general": All other questions.
 
-    Given the following database schema:
-    {table_info}
+        Reply ONLY with the category name, no explanations.
 
-    Task:
-    - Write a syntactically correct SQL query for the question below.
-    - Do not use these forbidden SQL keywords: "DELETE", "UPDATE", "INSERT", "DROP", "ALTER", "CREATE", "TRUNCATE".
-    - Limit the results to {top_k} rows.
-    - If the query returns results, use them to answer the question in plain English.
-    - If the query returns no results, reply: "I don't know."
+        Examples:
+        Q: "What is the cheapest flight from San Jose to Kona on July 15th 2025?" 
+        A: flight api
 
-    Question:
-    {input}
+        Q: "Total air traffic in 2020?"
+        A: database
 
-    Strucutre output strictly as follows:
-    SQL Query: the SQL query
-    Answer: the answer  
+        Q: "What is the weather like in Kona in July?"
+        A: general
+        """)
 
-    If you are unable to answer the question, reply: "I don't know             
-    ''')
+    sql_prompt = (
+        """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
 
-    web_prompt = ('''You are an expert flight planner assistant that will answer general questions.
+        Question: {question}
+        SQL Query: {query}
+        SQL Result: {result}
+        your response should be a concise answer to the question."""
+        )
+
+    web_prompt = ('''You are an expert flight planner assistant.
                     
     Given the following web search results:
     {context}
-    Task:
+                  
+    Tasks:
     - Answer the question below using the web search results.
     - If the web search results contain a list of items, summarize the list in your answer.
     - If the web search results do not contain enough information to answer the question, reply: "I don't know."
@@ -91,7 +90,6 @@ def setup_router(llm, number_of_results):
         return new_router
     except Exception as e:
         return f"⚠️ Error: {str(e)}"
-
 
 def answer_question(user_input, router, prompt_scanner): 
     try:

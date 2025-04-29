@@ -37,20 +37,19 @@ class Router:
         prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", self.system_prompt),
-                ("human", "{input}"),
+                ("human", "{question}"),
             ]
         )
-        routing_result = self.llm.invoke(prompt.invoke({query})).content.lower()
-
-        if routing_result == "flight api":
+        routing_result = self.llm.invoke(prompt.invoke({"question":query})).content.lower()
+        print(f"Routing result: {routing_result}")
+        if "flight api" in routing_result:
             return self.get_flight_information(query)
-        elif routing_result == "general":
+        elif "general" in routing_result:
             return self.get_general_information(query)
-        elif routing_result == "database":
+        elif "database" in routing_result:
             return self.get_database_information(query)
         else:
-            return self.get_general_information(query)
-            # raise ValueError("Invalid routing result")
+            raise ValueError("Invalid routing result")
 
     def get_flight_information(self, query):
         flight_prompt = ChatPromptTemplate.from_messages([
