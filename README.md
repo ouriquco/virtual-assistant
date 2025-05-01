@@ -1,4 +1,5 @@
-✈️ Flight Planner Assistant
+#✈️ Flight Planner Assistant
+
 A powerful AI assistant that answers questions about flights and air traffic data, generates safe SQL queries, and provides structured information extraction-all powered by LangChain and modern LLMs.
 
 🚀 Features
