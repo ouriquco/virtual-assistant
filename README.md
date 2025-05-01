@@ -19,7 +19,7 @@ Uses advanced prompt engineering and retrieval-augmented generation for accurate
 - Built-in SQL injection detection and prevention.
 - Built-in direct and indirect prompt injection detection and prevention
 
-# 🧪 Demo
+# ▶️ Demo
 Try the project instantly in your browser using Google Colab:
 
 <a href="https://colab.research.google.com/github/ouriquco/virtual-assistant/blob/main/virtual_assistant_demo.ipynb" target="_blank">
