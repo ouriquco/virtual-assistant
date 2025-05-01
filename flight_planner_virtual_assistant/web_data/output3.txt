@@ -1,0 +1,7 @@
+Title: National Weather Service
+Content: 
+
+NWS
+
+All NOAA
+ Your local forecast office is Fair 62°F 17°C More Information: Local Forecast OfficeMore Local Wx3 Day HistoryHourly Weather Forecast Today  High: 66 °F Mostly Sunny Tonight  Low: 60 °F ChanceShowers andPatchy Fog Friday  High: 79 °F Slight ChanceShowers andPatchy Fogthen ChanceT-storms Friday Night  Low: 62 °F ChanceT-storms Saturday  High: 75 °F ChanceShowers thenShowersLikely Saturday Night  Low: 58 °F ShowersLikely Sunday  High: 69 °F ShowersLikely Sunday Night  Low: 56 °F ChanceT-storms thenChanceShowers Monday  High: 63 °F ChanceShowers Zone Area Forecast for New York (Manhattan) County, NY High Temperature Chance of Precipitation

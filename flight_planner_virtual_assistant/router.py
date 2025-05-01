@@ -34,14 +34,8 @@ class Router:
         self.web_prompt = web_prompt
 
     def route(self, query):
-        prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", self.system_prompt),
-                ("human", "{question}"),
-            ]
-        )
-        routing_result = self.llm.invoke(prompt.invoke({"question":query})).content.lower()
-        print(f"Routing result: {routing_result}")
+        routing_result = self.llm.invoke(self.system_prompt.invoke({"input":query})).content.lower()
+        print(f"Routing result: {routing_result}\n")
         if "flight api" in routing_result:
             return self.get_flight_information(query)
         elif "general" in routing_result:
@@ -53,15 +47,14 @@ class Router:
 
     def get_flight_information(self, query):
         flight_prompt = ChatPromptTemplate.from_messages([
-            ("system", """Extract flight details from this query. {format_instructions}"""),
+            ("system", "{format_instructions}"),
             ("human", "{input}")
         ]).partial(format_instructions=self.flight_parser.get_format_instructions())
-        
         extraction_chain = flight_prompt | self.llm | self.flight_parser
-        
+
         try:
             params = extraction_chain.invoke({"input": query})
-            print(f'Check flight parameters {params}')
+            print(f'Check flight parameters {params}\n\n')
             flights = self.amadeus.find_flights(
                 origin=params.origin,
                 destination=params.destination,
@@ -78,9 +71,9 @@ class Router:
                 data = f.read()
 
             offers = [offer.strip() for offer in data.split('-' * 40) if offer.strip()]
-            vectorstore = get_vectorstore(collection_name="flight_data")
-            add_flights_to_vectorstore(vectorstore, offers)
-            
+            # vectorstore = get_vectorstore(collection_name="flight_data")
+            # add_flights_to_vectorstore(vectorstore, offers)
+    
             flight_offer = '''
             Price: 1032.28 USD
             Itinerary duration: PT12H58M
@@ -102,23 +95,26 @@ class Router:
             - If the answer is present in the flight information, provide an answer in this format: {flight_offer}. 
             - If the answer is not present in the flight information, say "There are no flights based on the information given."
             ''')
-
+        
             final_prompt = ChatPromptTemplate.from_messages([
                 ("system", prompt),
                 ("human", "{input}"),
-            ]).partial(flight_offer=flight_offer)
+            ]).partial(flight_offer=flight_offer, context=offers)
 
-            vectorstore = get_vectorstore("flight_data")
-            retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-            question_answer_chain = create_stuff_documents_chain(self.llm, final_prompt)
-            chain = create_retrieval_chain(retriever, question_answer_chain)
+            # vectorstore = get_vectorstore("flight_data")
+            # retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+            # question_answer_chain = create_stuff_documents_chain(self.llm, final_prompt)
+            # chain = create_retrieval_chain(retriever, question_answer_chain)
 
-             # Measure the time taken for the chain to run to test Redis cache
+            test_chain = final_prompt | self.llm
+            # Measure the time taken for the chain to run to test Redis cache
             start_time = time.perf_counter()
-            response = chain.invoke({"input": query})
+            # response = chain.invoke({"input": query})
+            response = test_chain.invoke({"input": query})
             end_time = time.perf_counter()
-            print(f"Model Inference Time: {end_time - start_time:.2f} seconds")
-            return response.get('answer')
+
+            print(f"\n\nModel Inference Time: {end_time - start_time:.2f} seconds\n")
+            return response.content
         
         except Exception as e:
             print(f"Error: {e}")
@@ -150,8 +146,4 @@ class Router:
     def get_database_information(self, query):
         self.db.connect()
         return self.db.answer_query(query)
-        
-
-
-    
     

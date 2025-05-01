@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 load_dotenv()
 
 class FlightParams(BaseModel):
-    origin: str = Field(description="Departure city/IATA code")
-    destination: str = Field(description="Arrival city/IATA code")
+    origin: str = Field(description="IATA code")
+    destination: str = Field(description="IATA code")
     departure_date: str = Field(description="Date in YYYY-MM-DD format")
     adults: int = Field(1, description="Number of adult passengers")
 
@@ -49,4 +49,4 @@ class AmadeusAPI:
                             f"on {segment['departure']['at']}")
                 file.write('-' * 40 + '\n')
                 print('-' * 40)
-            
+        

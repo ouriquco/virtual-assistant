@@ -2,8 +2,9 @@ import gradio as gr
 from langchain_community.cache import RedisCache
 from langchain.globals import set_llm_cache
 from redis import Redis
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import FewShotPromptTemplate
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from router import Router, ChatOpenRouter
 from dotenv import load_dotenv
 import torch
@@ -16,8 +17,8 @@ def parse_args():
     return parser.parse_args()
 
 def get_prompt_injection_scanner():
-    tokenizer = AutoTokenizer.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection")
-    model = AutoModelForSequenceClassification.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection")
+    tokenizer = AutoTokenizer.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection-v2")
+    model = AutoModelForSequenceClassification.from_pretrained("ProtectAI/deberta-v3-base-prompt-injection-v2")
 
     classifier = pipeline(
     "text-classification",
@@ -41,23 +42,40 @@ def get_llm(model_name):
 
 def setup_router(llm, number_of_results):
 
-    system_prompt = ("""Classify the user's question into one of these categories:
-        - "flight api": Questions about specific flights (e.g., ticket prices, departure times, arrival times).
-        - "database": Questions about aggregated air traffic data (e.g., totals, trends).
-        - "general": All other questions.
-
-        Reply ONLY with the category name, no explanations.
-
-        Examples:
-        Q: "What is the cheapest flight from San Jose to Kona on July 15th 2025?" 
-        A: flight api
-
-        Q: "Total air traffic in 2020?"
-        A: database
-
-        Q: "What is the weather like in Kona in July?"
-        A: general
+    example_prompt = PromptTemplate.from_template("""
+        You are an expert flight planner assistant.
+        Use the following examples to answer the user's question:
+                                                  
+        Question: {question}
+        Answer: {answer}
         """)
+    
+    examples = [
+        {"question":"What is the cheapest flight from San Jose to Kona on July 15th 2025?",
+         "answer":"flight api",},
+        {"question":"What is the most expensive flight from Los Angelas to Las Vegas on May 19th 2025?",
+         "answer":"flight api",},
+         {"question":"What is the earliest flight from San Diego to Seattle on July 15th 2025?",
+         "answer":"flight api",},
+         {"question":"What is the total air traffic in 2020?",
+         "answer":"database",},
+         {"question":"What was the air traffic like for every month in 2024?",
+         "answer":"database",},
+         {"question":"What is the average air traffic in 2022?",
+         "answer":"database",},
+         {"question":"What is the weather like in Kona in July?",
+         "answer":"general",},
+         {"question":"What is the best time to visit Hawaii?",
+         "answer":"general",},
+         {"question":"What are the top 10 tourist attractions in Hawaii?",
+         "answer":"general",},
+        ]
+    example_prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        suffix="Question: {input}",
+        input_variables=["input"],
+    )
 
     sql_prompt = (
         """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
@@ -82,7 +100,7 @@ def setup_router(llm, number_of_results):
     try: 
         new_router = Router(
             llm=llm,
-            system_prompt=system_prompt,
+            system_prompt=example_prompt,
             web_prompt=web_prompt,
             sql_prompt=sql_prompt,
             number_of_results=number_of_results,
