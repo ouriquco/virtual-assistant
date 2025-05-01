@@ -45,9 +45,12 @@ as environment variables
 
 1. “What’s the cheapest flight from SFO to JFK on July 1, 2025?”
 
-2. “Total air traffic in 2020?”
+2. “What was the total U.S. airline traffic in 2020?”
 
-3. “Generate a SQL query for flights from LAX to HNL in June.”
+3. “What will the weather be like in New York in the month of July?”
+
+# 🏗️ Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 
 
