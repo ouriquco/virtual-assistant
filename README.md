@@ -19,6 +19,9 @@ Uses advanced prompt engineering and retrieval-augmented generation for accurate
 - Built-in SQL injection detection and prevention.
 - Built-in direct and indirect prompt injection detection and prevention
 
+# 🧪 Demo
+Try the project instantly in your browser using Google Colab:
+
 # 🛠️ Installation
 ```
 git clone https://github.com/yourusername/flight-sql-assistant.git
