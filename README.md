@@ -22,6 +22,15 @@ Uses advanced prompt engineering and retrieval-augmented generation for accurate
 # 🧪 Demo
 Try the project instantly in your browser using Google Colab:
 
+<a href="(https://colab.research.google.com/github/ouriquco/virtual-assistant/blob/main/virtual_assistant_demo.ipynb)" target="_blank">
+  <img src="https://img.shields.io/badge/Open%20in-Google%20Colab-orange?logo=google-colab" alt="Open in Colab"/>
+</a>
+
+**Instructions:**
+1. Click the **Open in Colab** button above.
+2. In Colab, go to **File > Save a copy in Drive** to make your own editable copy.
+3. Follow the notebook instructions to run the demo.
+
 # 🛠️ Installation
 ```
 git clone https://github.com/yourusername/flight-sql-assistant.git
