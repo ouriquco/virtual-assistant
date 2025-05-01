@@ -31,5 +31,5 @@ Configure your database connection and set HOST, USER, PASSWORD and DATABASE as 
 Set your AMADEUS_CLIENT_ID, AMADEUS_CLIENT_SECRET and OPENROUTER_API_KEY as environment variables.
 
 ## Run the assistant:
-python app.py
+```python app.py```
 
