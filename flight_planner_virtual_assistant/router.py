@@ -34,6 +34,7 @@ class Router:
         self.web_prompt = web_prompt
 
     def route(self, query):
+        print(f'System prompt: {self.system_prompt.invoke({"input":query})}\n\n')
         routing_result = self.llm.invoke(self.system_prompt.invoke({"input":query})).content.lower()
         print(f"Routing result: {routing_result}\n")
         if "flight api" in routing_result:

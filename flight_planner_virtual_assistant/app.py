@@ -43,33 +43,41 @@ def get_llm(model_name):
 def setup_router(llm, number_of_results):
 
     example_prompt = PromptTemplate.from_template("""
-        You are an expert flight planner assistant.
-        Use the following examples to answer the user's question:
-                                                  
         Question: {question}
+        Reasoning: {reasoning}
         Answer: {answer}
         """)
     
     examples = [
         {"question":"What is the cheapest flight from San Jose to Kona on July 15th 2025?",
+         "reasoning":"To determine the cheapest flight, I need to access real-time flight pricing data for the specified route and date. This information is available via a flight API.",
          "answer":"flight api",},
         {"question":"What is the most expensive flight from Los Angelas to Las Vegas on May 19th 2025?",
+         "reasoning":"Finding the most expensive flight requires checking all available flights for that route and date, which can be retrieved from a flight API.",
          "answer":"flight api",},
          {"question":"What is the earliest flight from San Diego to Seattle on July 15th 2025?",
+          "reasoning":"To find the earliest flight, I need to get the departure times for all flights on that route and date, which are available from a flight API.",
          "answer":"flight api",},
          {"question":"What is the total air traffic in 2020?",
+          "reasoning":"Total air traffic for a year is typically stored in historical databases, so I should query the air traffic database for 2020 data.",
          "answer":"database",},
          {"question":"What was the air traffic like for every month in 2024?",
+          "reasoning":"Monthly air traffic statistics are stored in the air traffic database, so I need to retrieve this data for each month in 2024.",
          "answer":"database",},
          {"question":"What is the average air traffic in 2022?",
+          "reasoning":"To calculate the average air traffic, I should access the 2022 data from the air traffic database and compute the mean.",
          "answer":"database",},
          {"question":"What is the weather like in Kona in July?",
+          "reasoning":"This question is not specific to flights or air traffic, so I can use general knowledge to answer it.",
          "answer":"general",},
          {"question":"What is the best time to visit Hawaii?",
+          "reasoning":"This question is not specific to flights or air traffic, so I can use general knowledge to answer it.",
          "answer":"general",},
          {"question":"What are the top 10 tourist attractions in Hawaii?",
+          "reasoning":"This question is not specific to flights or air traffic, so I can use general knowledge to answer it.",
          "answer":"general",},
         ]
+    
     example_prompt = FewShotPromptTemplate(
         examples=examples,
         example_prompt=example_prompt,
